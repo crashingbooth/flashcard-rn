@@ -14,17 +14,17 @@ const CardButton: React.FC<CardButtonProps> = ({ text }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: 'center',
         borderWidth: 2,
         borderColor: '#000',
         borderRadius: 10,
         paddingVertical: 5,
-        paddingHorizontal: 40
+        paddingHorizontal: 20,
+        width: '40%'
     },
 
     buttonText: {
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: 'bold'
     }
 })
