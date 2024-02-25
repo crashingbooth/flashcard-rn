@@ -1,18 +1,24 @@
 
-import { Button, StyleSheet, Text, View } from 'react-native';
-import Card from './card';
+import { Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardModel, DeckModel, Side, sampleCards } from '../models/cardModel';
 import { CardNavigationButton, Direction}from './cardNavigation';
 import { fetchData } from '../resources/endpoints';
 import { textStyles } from '../styles/textStyles';
+import FlipCard from 'react-native-flip-card';
+import { CardSide } from './cardSide';
 
 const QuizPage = () => {
     const [cards, setCards] = useState<CardModel[]>(sampleCards)
     const [currentCardIndex, setCurrentCardIndex] = useState(0)
-    const [side, setSide] = useState<Side>(Side.term)
     const [deckTitle, setDecktitle] = useState<string>("")
+    const [isFlipped, setIsFlipped] = useState(false); 
+    const [animationEnabled, setAnimationEnabled] = useState(true);
+  
+    const toggleFlip = () => { 
+        setIsFlipped(!isFlipped); 
+    }; 
 
     const currentCard = (): CardModel => {
         return cards[currentCardIndex]
@@ -47,13 +53,12 @@ const QuizPage = () => {
     const changeCardIndex = (direction: Direction) => {
         const newIndex = currentCardIndex + ((direction === Direction.next) ? 1 : -1)
         if (newIndex >= 0 && newIndex <= cards.length - 1) {
+            if (isFlipped) {
+                // setAnimationEnabled(false)
+                toggleFlip()
+            }
             setCurrentCardIndex(newIndex)
-            setSide(Side.term)
         }
-    }
-
-    const changeSide = () => {
-        setSide(side + 1 % 2)
     }
 
     return (
@@ -62,7 +67,12 @@ const QuizPage = () => {
             <Text>{`${currentCardIndex + 1} / ${cards.length} `}</Text>
             <View style={styles.cardLevelContainer}>
                 <CardNavigationButton direction={Direction.previous} changeCardIndex={changeCardIndex}/>
-                <Card term={currentCard().term} definition={currentCard().definition} currentSide={side} changeSide={changeSide} />
+                <TouchableWithoutFeedback onPress={toggleFlip}>
+                    <FlipCard flip={isFlipped} clickable={false} flipHorizontal={animationEnabled} flipVertical={false} onFlipEnd={() =>setAnimationEnabled(true)} >
+                        <CardSide card={currentCard()} side={Side.term}/>
+                        <CardSide card={currentCard()} side={Side.definition}/>
+                    </FlipCard>
+                </TouchableWithoutFeedback>
                 <CardNavigationButton direction={Direction.next} changeCardIndex={changeCardIndex}/>
             </View>
         </View>
