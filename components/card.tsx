@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CardButton from './cardButton';
 import { useState } from 'react';
 import { Side } from '../models/cardModel';
+import { textStyles } from '../styles/textStyles';
 
 interface cardProps {
     term: string,
@@ -28,8 +29,8 @@ const Card: React.FC<cardProps> = ({ term, definition, currentSide, changeSide }
             <View style={[styles.mainContainer, dynamicStyles.mainContainer]}>
                 <View style={styles.upperCardContainer}>
                     <View style={styles.topLineContainer}>
-                        <Text style={styles.topLineText}>{currentSide == Side.term ? 'Term' : 'Definition'}</Text>
-                        <Text style={styles.topLineText}>*</Text>
+                        <Text style={textStyles.subHeaderText}>{currentSide == Side.term ? 'Term' : 'Definition'}</Text>
+                        <Text style={textStyles.subHeaderText}>*</Text>
                     </View>
                     <Text style={styles.vocabText}>{currentSide == Side.term ? term : definition}</Text>
                 </View>
@@ -66,12 +67,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 20,
     },
-
-    topLineText: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-
     vocabText: {
         fontSize: 24,
     },

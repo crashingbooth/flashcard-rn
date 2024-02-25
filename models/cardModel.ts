@@ -7,6 +7,11 @@ export interface CardModel {
     deck_id: number
 }
 
+export interface DeckModel {
+    deckName: string,
+    cards: CardModel[]
+}
+
 export enum Side {
     term,
     definition
