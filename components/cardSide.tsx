@@ -11,9 +11,10 @@ import CardStarButton from './cardStarButton';
 interface CardSideProps {
     side: Side
     card: CardModel
+    didToggleIsStarred: () => void
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side, card }) => {
+export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred }) => {
 
 
     const dynamicStyles = {
@@ -21,13 +22,13 @@ export const CardSide: React.FC<CardSideProps> = ({ side, card }) => {
             backgroundColor: side == Side.term ? '#C0C4E9' : '#DAF6CC'
         }
     }
-
+    
     return (
         <View style={[styles.mainContainer, dynamicStyles.mainContainer]}>
         <View style={styles.upperCardContainer}>
             <View style={styles.topLineContainer}>
                 <Text style={textStyles.subHeaderText}>{side == Side.term ? 'Term' : 'Definition'}</Text>
-                <CardStarButton isStarred={card.isStarred}/>
+                <CardStarButton isStarred={card.isStarred} didToggleIsStarred={didToggleIsStarred}/>
             </View>
             <Text style={styles.vocabText}>{side == Side.term ? card.term : card.definition}</Text>
         </View>

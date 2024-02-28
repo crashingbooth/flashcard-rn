@@ -1,8 +1,8 @@
 
-import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View } from 'react-native';
+import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect, useRef, useState } from 'react';
-import { CardModel, DeckModel, Side, sampleCards } from '../models/cardModel';
+import { CardModel, DeckModel, Side, sampleCards, toggleIsStarred } from '../models/cardModel';
 import { CardNavigationButton, Direction } from './cardNavigation';
 import { fetchData } from '../resources/endpoints';
 import { textStyles } from '../styles/textStyles';
@@ -23,6 +23,10 @@ const QuizPage = () => {
 
     const currentCard = (): CardModel => {
         return cards[currentCardIndex]
+    }
+
+    const didToggleIsStarred = () => {
+        setCards(toggleIsStarred(currentCardIndex, cards))
     }
 
     const fetchDataAndHandleData = async () => {
@@ -78,8 +82,6 @@ const QuizPage = () => {
         }).start();
       };
     
-    
-
     return (
         <View style={styles.pageContainer}>
             <Text style={textStyles.headerText}>{deckTitle}</Text>
@@ -94,8 +96,8 @@ const QuizPage = () => {
                             flipVertical={false}
                             onFlipEnd={() => setAnimationEnabled(true)} 
                             >
-                            <CardSide card={currentCard()} side={Side.term} />
-                            <CardSide card={currentCard()} side={Side.definition} />
+                            <CardSide card={currentCard()} side={Side.term} didToggleIsStarred={didToggleIsStarred} />
+                            <CardSide card={currentCard()} side={Side.definition} didToggleIsStarred={didToggleIsStarred} />
                         </FlipCard>
                     </TouchableWithoutFeedback>
                 </Animated.View>

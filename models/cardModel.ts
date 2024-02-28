@@ -34,3 +34,10 @@ export const sampleCards: CardModel[] = [
 
 ]
 
+export const toggleIsStarred = (index: number, cards: CardModel[]):CardModel[]  => {
+    let resultCards = [...cards]
+    const isStarredAtIndex: boolean = cards[index].isStarred ?? false
+    resultCards[index].isStarred = !isStarredAtIndex
+    return resultCards
+}
+
