@@ -2,7 +2,11 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { textStyles } from '../styles/textStyles';
 import CardButton from './cardButton';
 import { CardModel, Side } from '../models/cardModel';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
+import { faStar as borderStar } from '@fortawesome/free-regular-svg-icons/faStar'
 import React from 'react';
+import CardStarButton from './cardStarButton';
 
 interface CardSideProps {
     side: Side
@@ -23,7 +27,7 @@ export const CardSide: React.FC<CardSideProps> = ({ side, card }) => {
         <View style={styles.upperCardContainer}>
             <View style={styles.topLineContainer}>
                 <Text style={textStyles.subHeaderText}>{side == Side.term ? 'Term' : 'Definition'}</Text>
-                <Text style={textStyles.subHeaderText}>*</Text>
+                <CardStarButton isStarred={card.isStarred}/>
             </View>
             <Text style={styles.vocabText}>{side == Side.term ? card.term : card.definition}</Text>
         </View>

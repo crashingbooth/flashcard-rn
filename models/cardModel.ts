@@ -5,6 +5,7 @@ export interface CardModel {
     definition: string
     id: number
     deck_id: number
+    isStarred?: boolean 
 }
 
 export interface DeckModel {
