@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { textStyles } from '../styles/textStyles';
 import CardButton from './cardButton';
-import { CardModel, Side } from '../models/cardModel';
+import { CardModel, LearningStatus, Side } from '../models/cardModel';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faStar as borderStar } from '@fortawesome/free-regular-svg-icons/faStar'
@@ -12,9 +12,10 @@ interface CardSideProps {
     side: Side
     card: CardModel
     didToggleIsStarred: () => void
+    didChangeCardLearningStatus: (newStatus: LearningStatus) => void
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred }) => {
+export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred, didChangeCardLearningStatus }) => {
 
 
     const dynamicStyles = {
@@ -33,8 +34,8 @@ export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarr
             <Text style={styles.vocabText}>{side == Side.term ? card.term : card.definition}</Text>
         </View>
         <View style={styles.buttonContainer}>
-            <CardButton text={'LEARNING'} />
-            <CardButton text={'KNOW'} />
+            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.know} didChangeCardLearningStatus={didChangeCardLearningStatus} />
+            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.stillSlearning} didChangeCardLearningStatus={didChangeCardLearningStatus} />
         </View>
     </View>
     )

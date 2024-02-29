@@ -1,14 +1,23 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { LearningStatus } from '../models/cardModel';
 
 interface CardButtonProps {
-    text: string;
-  }
+    learningStatusText: LearningStatus
+    cardLearningStatus: LearningStatus
+    didChangeCardLearningStatus: (newStatus: LearningStatus) => void
+}
 
-const CardButton: React.FC<CardButtonProps> = ({ text }) => {
+const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCardLearningStatus, cardLearningStatus }) => {
+    const handleTap = () => {
+        didChangeCardLearningStatus(learningStatusText)
+    }
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.buttonText}>{text}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={handleTap}>
+            <View style={styles.container}>
+                <Text style={styles.buttonText}>{`${learningStatusText} ${cardLearningStatus === learningStatusText ? `***` : ``}`}</Text>
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 

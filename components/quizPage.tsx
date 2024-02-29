@@ -2,7 +2,7 @@
 import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect, useRef, useState } from 'react';
-import { CardModel, DeckModel, Side, sampleCards, toggleIsStarred } from '../models/cardModel';
+import { CardModel, DeckModel, LearningStatus, Side, sampleCards, setLearningStatus, toggleIsStarred } from '../models/cardModel';
 import { CardNavigationButton, Direction } from './cardNavigation';
 import { fetchData } from '../resources/endpoints';
 import { textStyles } from '../styles/textStyles';
@@ -27,6 +27,10 @@ const QuizPage = () => {
 
     const didToggleIsStarred = () => {
         setCards(toggleIsStarred(currentCardIndex, cards))
+    }
+
+    const didChangeCardLearningStatus = (newStatus: LearningStatus) => {
+        setCards(setLearningStatus(currentCardIndex, newStatus, cards))
     }
 
     const fetchDataAndHandleData = async () => {
@@ -96,8 +100,8 @@ const QuizPage = () => {
                             flipVertical={false}
                             onFlipEnd={() => setAnimationEnabled(true)} 
                             >
-                            <CardSide card={currentCard()} side={Side.term} didToggleIsStarred={didToggleIsStarred} />
-                            <CardSide card={currentCard()} side={Side.definition} didToggleIsStarred={didToggleIsStarred} />
+                            <CardSide card={currentCard()} side={Side.term} didToggleIsStarred={didToggleIsStarred} didChangeCardLearningStatus={didChangeCardLearningStatus}/>
+                            <CardSide card={currentCard()} side={Side.definition} didToggleIsStarred={didToggleIsStarred} didChangeCardLearningStatus={didChangeCardLearningStatus}/>
                         </FlipCard>
                     </TouchableWithoutFeedback>
                 </Animated.View>

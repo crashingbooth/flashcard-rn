@@ -1,5 +1,5 @@
 import { log } from "tone/build/esm/core/util/Debug";
-import { CardModel, DeckModel } from "../models/cardModel";
+import { CardModel, DeckModel, LearningStatus } from "../models/cardModel";
 
 export const API_ENDPOINTS = {
     ROOT: 'https://flashcard.fly.dev/api/',
@@ -30,8 +30,11 @@ export const API_ENDPOINTS = {
           throw error
       }
   
-      const data: DeckModel = await response.json();      
-      return data;
+      let deck: DeckModel = await response.json();     
+      // deck = {...deck, cards: deck.cards.map(card => {...card, card.isStarred: false }) }
+      const formattedCards = deck.cards.map(card => ({...card, isStarred: false, learningStatus: LearningStatus.unknown}))
+
+      return {...deck, cards: formattedCards}
     } catch (error) {
       // Handle network errors or JSON parsing errors
       console.error('Error fetching data:', (error as any).message);
