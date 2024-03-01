@@ -8,14 +8,32 @@ interface CardButtonProps {
 }
 
 const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCardLearningStatus, cardLearningStatus }) => {
+
+
     const handleTap = () => {
         didChangeCardLearningStatus(learningStatusText)
     }
 
+    const isSelected = (): boolean => {
+        return learningStatusText !== cardLearningStatus
+    }
+
+    const getSelectedBackgroundStyle = () => {
+        return {
+            backgroundColor: learningStatusText === cardLearningStatus ? 'black' : 'rgba(0, 0, 0, 0)',
+        }
+    }
+
+    const getSelectedTextStyle = () => {
+        return {
+            color: learningStatusText !== cardLearningStatus ? 'black' : '#C0C4E9',
+        }
+    }
+
     return (
         <TouchableWithoutFeedback onPress={handleTap}>
-            <View style={styles.container}>
-                <Text style={styles.buttonText}>{`${learningStatusText} ${cardLearningStatus === learningStatusText ? `***` : ``}`}</Text>
+            <View style={[styles.container, getSelectedBackgroundStyle()]}>
+                <Text style={[styles.buttonText, getSelectedTextStyle()]}>{`${learningStatusText}`}</Text>
             </View>
         </TouchableWithoutFeedback>
     )
@@ -34,8 +52,19 @@ const styles = StyleSheet.create({
 
     buttonText: {
         fontSize: 12,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'red'
+    },
+
+    buttonSelected: {
+        backgroundColor: 'black'
+    },
+
+    buttonDefault: {
+        backgroundColor: 'clear'
     }
+
+
 })
 
 export default CardButton;
