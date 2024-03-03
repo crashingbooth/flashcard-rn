@@ -1,16 +1,16 @@
+import React from 'react';
 import { Button, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { DeckContext, DeckContextType } from '../context/deckContext';
 import { LearningStatus } from '../models/cardModel';
 import { Direction } from './cardNavigation';
 
 interface CardButtonProps {
     learningStatusText: LearningStatus
-    cardLearningStatus: LearningStatus
-    didChangeCardLearningStatus: (newStatus: LearningStatus) => void
     changeCardIndex: (direction: Direction) => void
 }
 
-const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCardLearningStatus, cardLearningStatus, changeCardIndex}) => {
-
+const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, changeCardIndex}) => {
+    const { didChangeCardLearningStatus, currentCard } = React.useContext(DeckContext) as DeckContextType
 
     const handleTap = () => {
         didChangeCardLearningStatus(learningStatusText)
@@ -19,18 +19,18 @@ const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCa
     }
 
     const isSelected = (): boolean => {
-        return learningStatusText !== cardLearningStatus
+        return learningStatusText !== currentCard().learningStatus
     }
 
     const getSelectedBackgroundStyle = () => {
         return {
-            backgroundColor: learningStatusText === cardLearningStatus ? 'black' : 'rgba(0, 0, 0, 0)',
+            backgroundColor: learningStatusText === currentCard().learningStatus ? 'black' : 'rgba(0, 0, 0, 0)',
         }
     }
 
     const getSelectedTextStyle = () => {
         return {
-            color: learningStatusText !== cardLearningStatus ? 'black' : '#C0C4E9',
+            color: learningStatusText !== currentCard().learningStatus ? 'black' : '#C0C4E9',
         }
     }
 

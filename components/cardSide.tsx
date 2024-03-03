@@ -1,24 +1,19 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { textStyles } from '../styles/textStyles';
 import CardButton from './cardButton';
 import { CardModel, LearningStatus, Side } from '../models/cardModel';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
-import { faStar as borderStar } from '@fortawesome/free-regular-svg-icons/faStar'
 import React from 'react';
 import CardStarButton from './cardStarButton';
 import { Direction } from './cardNavigation';
+import { DeckContext, DeckContextType } from '../context/deckContext';
 
 interface CardSideProps {
     side: Side
-    card: CardModel
-    didToggleIsStarred: () => void
-    didChangeCardLearningStatus: (newStatus: LearningStatus) => void
     changeCardIndex: (direction: Direction) => void
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred, didChangeCardLearningStatus, changeCardIndex }) => {
-
+export const CardSide: React.FC<CardSideProps> = ({ side, changeCardIndex }) => {
+    const {currentCard} = React.useContext(DeckContext) as DeckContextType
 
     const dynamicStyles = {
         mainContainer: {
@@ -31,13 +26,13 @@ export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarr
         <View style={styles.upperCardContainer}>
             <View style={styles.topLineContainer}>
                 <Text style={textStyles.subHeaderText}>{side == Side.term ? 'Term' : 'Definition'}</Text>
-                <CardStarButton isStarred={card.isStarred} didToggleIsStarred={didToggleIsStarred}/>
+                <CardStarButton />
             </View>
-            <Text style={styles.vocabText}>{side == Side.term ? card.term : card.definition}</Text>
+            <Text style={styles.vocabText}>{side == Side.term ? currentCard().term : currentCard().definition}</Text>
         </View>
         <View style={styles.buttonContainer}>
-            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.know} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex} />
-            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.stillSlearning} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex} />
+            <CardButton  learningStatusText={LearningStatus.know} changeCardIndex={changeCardIndex} />
+            <CardButton  learningStatusText={LearningStatus.stillLearning} changeCardIndex={changeCardIndex} />
         </View>
     </View>
     )

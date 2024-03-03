@@ -1,37 +1,20 @@
 
 import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
-import React, { useEffect, useRef, useState } from 'react';
-import { CardModel, DeckModel, LearningStatus, Side, sampleCards, setLearningStatus, toggleIsStarred } from '../models/cardModel';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import {  Side } from '../models/cardModel';
 import { CardNavigationButton, Direction } from './cardNavigation';
 import { fetchData } from '../resources/endpoints';
 import { textStyles } from '../styles/textStyles';
 import FlipCard from 'react-native-flip-card';
 import { CardSide } from './cardSide';
+import { DeckContext, DeckContextType } from '../context/deckContext';
 
 const QuizPage = () => {
-    const [cards, setCards] = useState<CardModel[]>(sampleCards)
-    const [currentCardIndex, setCurrentCardIndex] = useState(0)
-    const [deckTitle, setDecktitle] = useState<string>("")
-    const [isFlipped, setIsFlipped] = useState(false);
+    const {loadNewDeck, currentCardIndex, setCurrentCardIndex, deckTitle,  toggleFlip, isFlipped, cards} = React.useContext(DeckContext) as DeckContextType
+
     const [animationEnabled, setAnimationEnabled] = useState(true);
     const slideAnim = useRef(new Animated.Value(-1000)).current;
-
-    const toggleFlip = () => {
-        setIsFlipped(!isFlipped);
-    };
-
-    const currentCard = (): CardModel => {
-        return cards[currentCardIndex]
-    }
-
-    const didToggleIsStarred = () => {
-        setCards(toggleIsStarred(currentCardIndex, cards))
-    }
-
-    const didChangeCardLearningStatus = (newStatus: LearningStatus) => {
-        setCards(setLearningStatus(currentCardIndex, newStatus, cards))
-    }
 
     const fetchDataAndHandleData = async () => {
         try {
@@ -39,8 +22,7 @@ const QuizPage = () => {
             if ('message' in result) {
                 console.error('Error:', result.message);
             } else {
-                setCards(result.cards)
-                setDecktitle(result.deckName)
+                loadNewDeck(result)
             }
         } catch (error) {
             console.log((error as any).message)
@@ -57,6 +39,10 @@ const QuizPage = () => {
     useEffect(() => {
         startAnimation()
       }, [slideAnim]);
+
+    // useEffect(() => {
+
+    // },[currentCardIndex])
 
       
     const lockOrientation = async () => {
@@ -100,8 +86,8 @@ const QuizPage = () => {
                             flipVertical={false}
                             onFlipEnd={() => setAnimationEnabled(true)} 
                             >
-                            <CardSide card={currentCard()} side={Side.term} didToggleIsStarred={didToggleIsStarred} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex}/>
-                            <CardSide card={currentCard()} side={Side.definition} didToggleIsStarred={didToggleIsStarred} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex}/>
+                            <CardSide side={Side.term}  changeCardIndex={changeCardIndex}/>
+                            <CardSide side={Side.definition} changeCardIndex={changeCardIndex}/>
                         </FlipCard>
                     </TouchableWithoutFeedback>
                 </Animated.View>

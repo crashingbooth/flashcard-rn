@@ -2,7 +2,7 @@
 
 export enum LearningStatus {
     know = "KNOW",
-    stillSlearning = "LEARNING",
+    stillLearning = "LEARNING",
     unknown = "UNKNOWN"
 }
 
