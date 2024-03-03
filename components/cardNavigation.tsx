@@ -1,17 +1,15 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { DeckContext, DeckContextType } from '../context/deckContext';
+import { Direction } from '../models/Types';
 
-export enum Direction {
-    next,
-    previous
-}
 
 interface CardNavigationButtonProp {
     direction: Direction,
-    changeCardIndex: (direction: Direction) => void
 }
 
-export const CardNavigationButton: React.FC<CardNavigationButtonProp> = ({direction, changeCardIndex}) => {
+export const CardNavigationButton: React.FC<CardNavigationButtonProp> = ({ direction }) => {
+    const {changeCardIndex} = React.useContext(DeckContext) as DeckContextType
     const handlePress = () => {
         changeCardIndex(direction)
     }

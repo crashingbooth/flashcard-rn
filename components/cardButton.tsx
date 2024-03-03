@@ -2,15 +2,14 @@ import React from 'react';
 import { Button, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { DeckContext, DeckContextType } from '../context/deckContext';
 import { LearningStatus } from '../models/cardModel';
-import { Direction } from './cardNavigation';
+import { Direction } from '../models/Types';
 
 interface CardButtonProps {
     learningStatusText: LearningStatus
-    changeCardIndex: (direction: Direction) => void
 }
 
-const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, changeCardIndex}) => {
-    const { didChangeCardLearningStatus, currentCard } = React.useContext(DeckContext) as DeckContextType
+const CardButton: React.FC<CardButtonProps> = ({ learningStatusText  }) => {
+    const { didChangeCardLearningStatus, currentCard, changeCardIndex } = React.useContext(DeckContext) as DeckContextType
 
     const handleTap = () => {
         didChangeCardLearningStatus(learningStatusText)

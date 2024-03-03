@@ -3,15 +3,16 @@ import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, Tou
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import {  Side } from '../models/cardModel';
-import { CardNavigationButton, Direction } from './cardNavigation';
+import { CardNavigationButton } from './cardNavigation';
 import { fetchData } from '../resources/endpoints';
 import { textStyles } from '../styles/textStyles';
 import FlipCard from 'react-native-flip-card';
 import { CardSide } from './cardSide';
 import { DeckContext, DeckContextType } from '../context/deckContext';
+import { Direction } from '../models/Types';
 
 const QuizPage = () => {
-    const {loadNewDeck, currentCardIndex, setCurrentCardIndex, deckTitle,  toggleFlip, isFlipped, cards} = React.useContext(DeckContext) as DeckContextType
+    const {loadNewDeck, deckTitle,  toggleFlip, isFlipped, cards, currentCardIndex} = React.useContext(DeckContext) as DeckContextType
 
     const [animationEnabled, setAnimationEnabled] = useState(true);
     const slideAnim = useRef(new Animated.Value(-1000)).current;
@@ -33,16 +34,12 @@ const QuizPage = () => {
     useEffect(() => {
         lockOrientation();
         fetchDataAndHandleData()
-
+        startAnimation()
     }, [])
 
     useEffect(() => {
-        startAnimation()
-      }, [slideAnim]);
-
-    // useEffect(() => {
-
-    // },[currentCardIndex])
+        loadNewCard()
+    },[currentCardIndex])
 
       
     const lockOrientation = async () => {
@@ -51,15 +48,11 @@ const QuizPage = () => {
         );
     }
 
-    const changeCardIndex = (direction: Direction) => {
-        const newIndex = currentCardIndex + ((direction === Direction.next) ? 1 : -1)
-        if (newIndex >= 0 && newIndex <= cards.length - 1) {
-            startAnimation()
-            if (isFlipped) {
-                setAnimationEnabled(false)
-                toggleFlip()
-            }
-            setCurrentCardIndex(newIndex)
+    const loadNewCard = () => {
+        startAnimation()
+        if (isFlipped) {
+            setAnimationEnabled(false)
+            toggleFlip()
         }
     }
 
@@ -77,7 +70,7 @@ const QuizPage = () => {
             <Text style={textStyles.headerText}>{deckTitle}</Text>
             <Text>{`${currentCardIndex + 1} / ${cards.length} `}</Text>
             <View style={styles.cardLevelContainer}>
-                <CardNavigationButton direction={Direction.previous} changeCardIndex={changeCardIndex} />
+                <CardNavigationButton direction={Direction.previous} />
                 <Animated.View style={[ {transform: [{translateY: slideAnim }]}]}>
                     <TouchableWithoutFeedback onPress={toggleFlip}>
                         <FlipCard flip={isFlipped}
@@ -86,12 +79,12 @@ const QuizPage = () => {
                             flipVertical={false}
                             onFlipEnd={() => setAnimationEnabled(true)} 
                             >
-                            <CardSide side={Side.term}  changeCardIndex={changeCardIndex}/>
-                            <CardSide side={Side.definition} changeCardIndex={changeCardIndex}/>
+                            <CardSide side={Side.term} />
+                            <CardSide side={Side.definition} />
                         </FlipCard>
                     </TouchableWithoutFeedback>
                 </Animated.View>
-                <CardNavigationButton direction={Direction.next} changeCardIndex={changeCardIndex} />
+                <CardNavigationButton direction={Direction.next} />
             </View>
         </View>
     )

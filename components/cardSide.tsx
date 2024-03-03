@@ -1,19 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { textStyles } from '../styles/textStyles';
 import CardButton from './cardButton';
-import { CardModel, LearningStatus, Side } from '../models/cardModel';
+import { LearningStatus, Side } from '../models/cardModel';
 import React from 'react';
 import CardStarButton from './cardStarButton';
-import { Direction } from './cardNavigation';
 import { DeckContext, DeckContextType } from '../context/deckContext';
 
 interface CardSideProps {
     side: Side
-    changeCardIndex: (direction: Direction) => void
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side, changeCardIndex }) => {
-    const {currentCard} = React.useContext(DeckContext) as DeckContextType
+export const CardSide: React.FC<CardSideProps> = ({ side }) => {
+    const {currentCard } = React.useContext(DeckContext) as DeckContextType
 
     const dynamicStyles = {
         mainContainer: {
@@ -31,8 +29,8 @@ export const CardSide: React.FC<CardSideProps> = ({ side, changeCardIndex }) => 
             <Text style={styles.vocabText}>{side == Side.term ? currentCard().term : currentCard().definition}</Text>
         </View>
         <View style={styles.buttonContainer}>
-            <CardButton  learningStatusText={LearningStatus.know} changeCardIndex={changeCardIndex} />
-            <CardButton  learningStatusText={LearningStatus.stillLearning} changeCardIndex={changeCardIndex} />
+            <CardButton  learningStatusText={LearningStatus.know} />
+            <CardButton  learningStatusText={LearningStatus.stillLearning} />
         </View>
     </View>
     )
