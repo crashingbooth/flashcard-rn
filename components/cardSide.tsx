@@ -7,15 +7,17 @@ import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faStar as borderStar } from '@fortawesome/free-regular-svg-icons/faStar'
 import React from 'react';
 import CardStarButton from './cardStarButton';
+import { Direction } from './cardNavigation';
 
 interface CardSideProps {
     side: Side
     card: CardModel
     didToggleIsStarred: () => void
     didChangeCardLearningStatus: (newStatus: LearningStatus) => void
+    changeCardIndex: (direction: Direction) => void
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred, didChangeCardLearningStatus }) => {
+export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarred, didChangeCardLearningStatus, changeCardIndex }) => {
 
 
     const dynamicStyles = {
@@ -34,8 +36,8 @@ export const CardSide: React.FC<CardSideProps> = ({ side, card, didToggleIsStarr
             <Text style={styles.vocabText}>{side == Side.term ? card.term : card.definition}</Text>
         </View>
         <View style={styles.buttonContainer}>
-            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.know} didChangeCardLearningStatus={didChangeCardLearningStatus} />
-            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.stillSlearning} didChangeCardLearningStatus={didChangeCardLearningStatus} />
+            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.know} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex} />
+            <CardButton cardLearningStatus={card.learningStatus} learningStatusText={LearningStatus.stillSlearning} didChangeCardLearningStatus={didChangeCardLearningStatus} changeCardIndex={changeCardIndex} />
         </View>
     </View>
     )

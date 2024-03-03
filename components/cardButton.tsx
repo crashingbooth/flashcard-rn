@@ -1,17 +1,21 @@
 import { Button, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { LearningStatus } from '../models/cardModel';
+import { Direction } from './cardNavigation';
 
 interface CardButtonProps {
     learningStatusText: LearningStatus
     cardLearningStatus: LearningStatus
     didChangeCardLearningStatus: (newStatus: LearningStatus) => void
+    changeCardIndex: (direction: Direction) => void
 }
 
-const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCardLearningStatus, cardLearningStatus }) => {
+const CardButton: React.FC<CardButtonProps> = ({ learningStatusText, didChangeCardLearningStatus, cardLearningStatus, changeCardIndex}) => {
 
 
     const handleTap = () => {
         didChangeCardLearningStatus(learningStatusText)
+        setTimeout(() => {changeCardIndex(Direction.next)}, 200)
+     
     }
 
     const isSelected = (): boolean => {
