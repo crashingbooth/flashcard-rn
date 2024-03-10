@@ -10,6 +10,7 @@ import FlipCard from 'react-native-flip-card';
 import { CardSide } from './cardSide';
 import { DeckContext, DeckContextType } from '../context/deckContext';
 import { Direction } from '../models/Types';
+import { ResultCard } from './resultCard';
 
 const QuizPage = () => {
     const {loadNewDeck, deckTitle,  toggleFlip, isFlipped, cards, currentCardIndex} = React.useContext(DeckContext) as DeckContextType

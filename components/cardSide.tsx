@@ -24,7 +24,7 @@ export const CardSide: React.FC<CardSideProps> = ({ side }) => {
         <View style={styles.upperCardContainer}>
             <View style={styles.topLineContainer}>
                 <Text style={textStyles.subHeaderText}>{side == Side.term ? 'Term' : 'Definition'}</Text>
-                <CardStarButton />
+                <CardStarButton allowsToggle={true} />
             </View>
             <Text style={styles.vocabText}>{side == Side.term ? currentCard().term : currentCard().definition}</Text>
         </View>

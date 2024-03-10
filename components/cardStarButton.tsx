@@ -5,11 +5,17 @@ import React, { useState } from 'react'
 import { TouchableWithoutFeedback, StyleSheet, View } from 'react-native'
 import { DeckContext, DeckContextType } from '../context/deckContext'
 
-const CardStarButton = () => {
+type CardStarButtonProps = {
+    allowsToggle: boolean
+}
+
+const CardStarButton: React.FC<CardStarButtonProps> = ({allowsToggle}) => {
     const { didToggleIsStarred, currentCard } = React.useContext(DeckContext) as DeckContextType
     
     const handlePress = () => {
-        didToggleIsStarred()
+        if (allowsToggle) {
+            didToggleIsStarred()
+        }
     }
 
     return (
