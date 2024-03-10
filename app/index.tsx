@@ -1,16 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
-import QuizPage from "../components/quizPage";
-import ResultPage from "../components/resultPage";
+import QuizPage from "./pages/quizPage";
+import ResultPage from "./pages/resultPage";
 import { DeckProvider } from "../context/deckContext";
 
 export default function Page() {
   return (
-    <View style={styles.container}>
-      <DeckProvider>
-        {/* <QuizPage/> */}
-        <ResultPage/>
-      </DeckProvider>
-    </View>
+    <DeckProvider>
+        <QuizPage/>
+        </DeckProvider>
+
+
   );
 }
 

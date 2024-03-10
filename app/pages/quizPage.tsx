@@ -1,16 +1,17 @@
 
-import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity, Pressable } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import {  Side } from '../models/cardModel';
-import { CardNavigationButton } from './cardNavigation';
-import { fetchData } from '../resources/endpoints';
-import { textStyles } from '../styles/textStyles';
+import {  Side } from '../../models/cardModel';
+import { CardNavigationButton } from '../../components/cardNavigation';
+import { fetchData } from '../../resources/endpoints';
+import { textStyles } from '../../styles/textStyles';
 import FlipCard from 'react-native-flip-card';
-import { CardSide } from './cardSide';
-import { DeckContext, DeckContextType } from '../context/deckContext';
-import { Direction } from '../models/Types';
-import { ResultCard } from './resultCard';
+import { CardSide } from '../../components/cardSide';
+import { DeckContext, DeckContextType } from '../../context/deckContext';
+import { Direction } from '../../models/Types';
+import { ResultCard } from '../../components/resultCard';
+import { Link } from 'expo-router';
 
 const QuizPage = () => {
     const {loadNewDeck, deckTitle,  toggleFlip, isFlipped, cards, currentCardIndex} = React.useContext(DeckContext) as DeckContextType
@@ -68,7 +69,11 @@ const QuizPage = () => {
     
     return (
         <View style={styles.pageContainer}>
-            <Text style={textStyles.headerText}>{deckTitle}</Text>
+            <View style={styles.headerLevelContainer}>
+                <Text></Text>
+                <Text style={textStyles.headerText}>{deckTitle}</Text>
+                <Link href={'pages/resultPage'}>{`=>`}</Link>
+            </View>
             <Text>{`${currentCardIndex + 1} / ${cards.length} `}</Text>
             <View style={styles.cardLevelContainer}>
                 <CardNavigationButton direction={Direction.previous} />
@@ -95,6 +100,15 @@ const styles = StyleSheet.create({
     pageContainer: {
         padding: 10,
         alignItems: 'center'
+    },
+
+    headerLevelContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'pink',
+        width: '100%'
+
     },
 
     cardLevelContainer: {

@@ -3,14 +3,14 @@ import {
     FlatList,
 
   } from 'react-native';
-import { DeckContext, DeckContextType } from '../context/deckContext';
-import { ResultCard } from './resultCard';
+import { DeckContext, DeckContextType } from '../../context/deckContext';
+import { ResultCard } from '../../components/resultCard';
 
 interface ResultPageProps {
 }
 
 const ResultPage: React.FunctionComponent<ResultPageProps> = (props) => {
-    const {loadNewDeck, deckTitle,  toggleFlip, isFlipped, cards, currentCardIndex} = React.useContext(DeckContext) as DeckContextType
+    const { cards } = React.useContext(DeckContext) as DeckContextType
 
   return (
     <FlatList

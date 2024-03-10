@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import QuizPage from './components/quizPage';
-import { DeckContext, DeckProvider } from './context/deckContext';
+import QuizPage from './app/pages/quizPage';
+import { DeckProvider } from './context/deckContext';
 
 export default function App() {
   return (

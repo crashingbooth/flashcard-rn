@@ -1,7 +1,15 @@
 import { Stack } from "expo-router";
+import { DeckProvider } from "../context/deckContext";
 
-const RootLayout = () => {
+export const RootLayout = () => {
     return (
-        <Stack.Screen name="quizPage" />
+        <>
+            <DeckProvider>
+                <Stack initialRouteName="index">
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="resultPage" />
+                </Stack>
+            </DeckProvider>
+        </>
     )
 }
