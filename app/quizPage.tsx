@@ -2,15 +2,15 @@
 import { Button, StyleSheet, Text, Animated, TouchableWithoutFeedback, View, TouchableOpacity, Pressable } from 'react-native';
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import {  Side } from '../../models/cardModel';
-import { CardNavigationButton } from '../../components/cardNavigation';
-import { fetchData } from '../../resources/endpoints';
-import { textStyles } from '../../styles/textStyles';
+import {  Side } from '../models/cardModel';
+import { CardNavigationButton } from '../components/cardNavigation';
+import { fetchData } from '../resources/endpoints';
+import { textStyles } from '../styles/textStyles';
 import FlipCard from 'react-native-flip-card';
-import { CardSide } from '../../components/cardSide';
-import { DeckContext, DeckContextType } from '../../context/deckContext';
-import { Direction } from '../../models/Types';
-import { ResultCard } from '../../components/resultCard';
+import { CardSide } from '../components/cardSide';
+import { DeckContext, DeckContextType } from '../context/deckContext';
+import { Direction } from '../models/Types';
+import { ResultCard } from '../components/resultCard';
 import { Link } from 'expo-router';
 
 const QuizPage = () => {
@@ -72,7 +72,7 @@ const QuizPage = () => {
             <View style={styles.headerLevelContainer}>
                 <Text></Text>
                 <Text style={textStyles.headerText}>{deckTitle}</Text>
-                <Link href={'pages/resultPage'}>{`=>`}</Link>
+                <Link href={'/resultPage'}>{`=>`}</Link>
             </View>
             <Text>{`${currentCardIndex + 1} / ${cards.length} `}</Text>
             <View style={styles.cardLevelContainer}>
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'pink',
         width: '100%'
 
     },

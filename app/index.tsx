@@ -1,14 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
-import QuizPage from "./pages/quizPage";
-import ResultPage from "./pages/resultPage";
-import { DeckProvider } from "../context/deckContext";
+import { Redirect } from "expo-router";
 
 export default function Page() {
+  console.log(`LOADED Index`);
+  
   return (
-    <DeckProvider>
-        <QuizPage/>
-        </DeckProvider>
-
+ 
+    
+  <Redirect href="/quizPage"/>
 
   );
 }
