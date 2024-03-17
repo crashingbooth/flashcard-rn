@@ -16,7 +16,7 @@ const ResultPage: React.FunctionComponent<ResultPageProps> = (props) => {
     <DeckProvider>
       <FlatList
       data={cards}
-      renderItem={ ({item}) => <ResultCard card={item}/>}
+      renderItem={ ({item, index}) => <ResultCard card={item} index={index}/>}
       keyExtractor={item => `${item.id}`}
       />
     </DeckProvider>

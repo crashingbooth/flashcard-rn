@@ -11,7 +11,7 @@ export interface CardModel {
     definition: string
     id: number
     deck_id: number
-    isStarred?: boolean 
+    isStarred: boolean 
     learningStatus: LearningStatus
 }
 
@@ -30,17 +30,20 @@ export const sampleCards: CardModel[] = [
     definition: 'package',
     id: 0,
     deck_id: 0,
-    learningStatus: LearningStatus.unknown},
+    learningStatus: LearningStatus.unknown,
+    isStarred: false},
     {term: "s'allonger",
     definition: 'to lie down',
     id: 1,
     deck_id: 0,
-    learningStatus: LearningStatus.unknown},
+    learningStatus: LearningStatus.unknown,
+    isStarred: false},
     {term: "faire un retour",
     definition: 'to give feedback',
     id: 2,
     deck_id: 0,
-    learningStatus: LearningStatus.unknown},
+    learningStatus: LearningStatus.unknown,
+    isStarred: false},
 
 ]
 

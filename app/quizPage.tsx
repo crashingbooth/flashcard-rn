@@ -85,8 +85,8 @@ const QuizPage = () => {
                             flipVertical={false}
                             onFlipEnd={() => setAnimationEnabled(true)} 
                             >
-                            <CardSide side={Side.term} />
-                            <CardSide side={Side.definition} />
+                            <CardSide side={Side.term} index={currentCardIndex} />
+                            <CardSide side={Side.definition } index={currentCardIndex} />
                         </FlipCard>
                     </TouchableWithoutFeedback>
                 </Animated.View>

@@ -4,9 +4,10 @@ import CardStarButton from './cardStarButton';
 
 type ResultCardProps = {
     card: CardModel
+    index: number
 }
 
-export const ResultCard:React.FC<ResultCardProps> = ({card}) => {
+export const ResultCard:React.FC<ResultCardProps> = ({card, index}) => {
 
     const statusDisplay = () => {
         if (card.learningStatus === LearningStatus.unknown) {
@@ -19,12 +20,13 @@ export const ResultCard:React.FC<ResultCardProps> = ({card}) => {
 
     return (
         <View style={styles.mainContainer}>
-            <CardStarButton allowsToggle={false}/>
+            <CardStarButton allowsToggle={false} isStarred={card.isStarred}/>
             <View style={styles.contentWrapper}>
                 <Text>Term: {card.term}</Text>
                 <Text>Definition: {card.definition}</Text>
             </View>
-            <Text>{statusDisplay()}</Text>
+            <Text style={styles.statusWrapper}
+             >{statusDisplay()}</Text>
         </View>
     )
 }
@@ -43,6 +45,11 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     contentWrapper: {
+        width: '30%'
+    },
 
+    statusWrapper: {
+        width: '10%'
     }
+
 });

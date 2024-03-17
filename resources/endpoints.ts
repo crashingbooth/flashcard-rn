@@ -31,7 +31,6 @@ export const API_ENDPOINTS = {
       }
   
       let deck: DeckModel = await response.json();     
-      // deck = {...deck, cards: deck.cards.map(card => {...card, card.isStarred: false }) }
       const formattedCards = deck.cards.map(card => ({...card, isStarred: false, learningStatus: LearningStatus.unknown}))
 
       return {...deck, cards: formattedCards}

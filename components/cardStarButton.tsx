@@ -1,16 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faStar as borderStar } from '@fortawesome/free-regular-svg-icons/faStar'
-import React, { useState } from 'react'
-import { TouchableWithoutFeedback, StyleSheet, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { TouchableWithoutFeedback, StyleSheet, View, Text } from 'react-native'
 import { DeckContext, DeckContextType } from '../context/deckContext'
 
 type CardStarButtonProps = {
     allowsToggle: boolean
+    isStarred: boolean
 }
 
-const CardStarButton: React.FC<CardStarButtonProps> = ({allowsToggle}) => {
-    const { didToggleIsStarred, currentCard } = React.useContext(DeckContext) as DeckContextType
+const CardStarButton: React.FC<CardStarButtonProps> = ({ allowsToggle, isStarred }) => {
+    const { didToggleIsStarred } = React.useContext(DeckContext) as DeckContextType
     
     const handlePress = () => {
         if (allowsToggle) {
@@ -21,7 +22,7 @@ const CardStarButton: React.FC<CardStarButtonProps> = ({allowsToggle}) => {
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
             <View style={styles.mainContainer}>
-                <FontAwesomeIcon size={24} icon={currentCard().isStarred ? faStar : borderStar} />
+                <FontAwesomeIcon size={24} icon={isStarred ? faStar : borderStar} />
             </View>
         </TouchableWithoutFeedback>
     )

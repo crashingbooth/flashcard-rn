@@ -7,10 +7,11 @@ import CardStarButton from './cardStarButton';
 import { DeckContext, DeckContextType } from '../context/deckContext';
 
 interface CardSideProps {
-    side: Side
+    side: Side,
+    index: number
 }
 
-export const CardSide: React.FC<CardSideProps> = ({ side }) => {
+export const CardSide: React.FC<CardSideProps> = ({ side, index }) => {
     const {currentCard } = React.useContext(DeckContext) as DeckContextType
 
     const dynamicStyles = {
@@ -24,7 +25,7 @@ export const CardSide: React.FC<CardSideProps> = ({ side }) => {
         <View style={styles.upperCardContainer}>
             <View style={styles.topLineContainer}>
                 <Text style={textStyles.subHeaderText}>{side == Side.term ? 'Term' : 'Definition'}</Text>
-                <CardStarButton allowsToggle={true} />
+                <CardStarButton allowsToggle={true} isStarred={currentCard().isStarred} />
             </View>
             <Text style={styles.vocabText}>{side == Side.term ? currentCard().term : currentCard().definition}</Text>
         </View>
